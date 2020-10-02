@@ -1,0 +1,4 @@
+env
+.vscode
+.pytest_cache
+converter.tsv.txt

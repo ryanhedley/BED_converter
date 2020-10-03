@@ -2,3 +2,5 @@ env
 .vscode
 .pytest_cache
 converter.tsv.txt
+ClinGen_haploinsufficiency_gene_GRCh37.bed
+ClinGen_haploinsufficiency_gene_GRCh37.bed_converted.bed

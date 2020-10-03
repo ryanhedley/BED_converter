@@ -2,14 +2,16 @@ import pandas as pd
 from tkinter.filedialog import askopenfilename
 
 
-#Import BED file
+#Download BED file from ftp://ftp.clinicalgenome.org/
+
+#Import BED file using Tkinter file dialogue
 def openfile():
     bed_filename = askopenfilename(title = "Select file", filetypes = (("BED files","*.bed"),("All Files","*.*")))
     return (bed_filename)
 
 
 
-#Convert BED file to DF
+#Convert imported BED file to Pandas DataFrame
 def convert_bed_to_df(bed_filename):
     #columns = ['chr', 'start', 'stop', 'gene', 'dosage']
     bed_df = pd.read_csv(bed_filename, sep="\t", header=1 )
@@ -18,7 +20,7 @@ def convert_bed_to_df(bed_filename):
     return(bed_df)
 
 
-#Convert BED to required format
+#Convert Pandas Dataframe to BED file in required format (with RGB colours)
 def convert_df_to_bed(bed_filename, bed_df):
     bed_filename = bed_filename + '_converted.bed'
 
@@ -30,7 +32,10 @@ def convert_df_to_bed(bed_filename, bed_df):
     score_30 = "0,255,255"  #Cyan
     score_40 = "0,255,0"    #Green
 
+    # Add BED file header
     header_row = "track name='ClinGen Gene Curation Haploinsufficiency Scores' db=hg19 itemRgb='On' \n"
+
+    # Create new BED file with changes
     with open(bed_filename, "w") as f:
         f.writelines(header_row)
 
@@ -75,7 +80,6 @@ def main():
     bed_filename = openfile()
     bed_df = convert_bed_to_df(bed_filename)
     convert_df_to_bed(bed_filename, bed_df)
-
 
 
 if __name__ == "__main__":
